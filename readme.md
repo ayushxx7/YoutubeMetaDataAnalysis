@@ -67,4 +67,5 @@ Understanding the reach of a topic on YouTube by Data Analysis
 - https://stackoverflow.com/questions/36370821/does-youtube-v3-data-api-have-a-limit-to-the-number-of-ids-you-can-send-to-vide
 
 ### Note
-We are not parsing playlists to avoid complexity in this POC
+- We are not parsing playlists to avoid complexity in this POC.
+- I used an anaconda installation for my JupyterNotebook setup and packages such as pandas, numpy, sklearn came from conda itself. Hence, there could be a version mismatch in requirements.txt or some commands in the notebook.
