@@ -37,8 +37,22 @@ Understanding the reach of a topic on YouTube by Data Analysis
   ```
 - Install required libraries using: `pip install -r requirements.txt`
 - Run `extract_metadata_from_yt_videos.py` for fetching the required data in JSON format
+  - Search term can be passed in this call (see `__main__` block): 
+
+      ```py
+      youtube_search_data = get_search_results_data(api_key, <search_term_goes_here>, 700)
+      ```
 - Once data is extracted, use JupyterNotebook `analysis.ipynb` to perform the analysis by selecting "Restart Kernel and Run All Cells" option from "Kernel" menu.
 
+### Output
+
+- The output CSV files will be present in the root folder itself.
+  - all_category_stats.csv
+  - category_analysis.csv
+  - tag_analysis.csv
+  - tags_vs_video_count.csv
+
+- The JSON files will also be present in root folder as well. They are stored at each preprocessing step for future reference or to analyze fault in case of error in pipeline.
 
 # References
 - [Create YouTube API](https://console.developers.google.com/marketplace/product/google/youtube.googleapis.com?q=search&referrer=search)
@@ -46,8 +60,11 @@ Understanding the reach of a topic on YouTube by Data Analysis
 - [YouTube API Python Quickstart](https://developers.google.com/youtube/v3/quickstart/python)
 - [Converting YouTube duration to Date Time](https://stackoverflow.com/a/16743442)
 - [Pandas SettingWithCopy Warning](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy)
+- [To check words in different languages](https://translate.google.com/)
 - https://stackoverflow.com/questions/40339886/pandas-concat-generates-nan-values
 - https://stackoverflow.com/questions/71284185/setting-values-in-one-column-using-another-in-pandas/71284229#71284229
+- https://stackoverflow.com/questions/312443/how-do-you-split-a-list-into-evenly-sized-chunks
+- https://stackoverflow.com/questions/36370821/does-youtube-v3-data-api-have-a-limit-to-the-number-of-ids-you-can-send-to-vide
 
 ### Note
 We are not parsing playlists to avoid complexity in this POC
