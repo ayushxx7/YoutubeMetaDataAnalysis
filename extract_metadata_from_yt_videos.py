@@ -21,7 +21,7 @@ def set_api_key():
     return api_key
 
 
-def get_search_results_data(api_key, query='python'):
+def get_search_results_data(api_key, query, num_results):
     """Get the search results data from the YouTube Data API.
 
     Parameters
@@ -34,6 +34,7 @@ def get_search_results_data(api_key, query='python'):
     dict:
         The search results data from the YouTube Data API.
     """
+    print("Getting search results data...")
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
     }
@@ -51,7 +52,7 @@ def get_search_results_data(api_key, query='python'):
 
     vid_count = 50
 
-    while vid_count < 400:
+    while vid_count < num_results:
         print(f'fetching data. vid_count {vid_count}')
         resp = requests.get(search, params=params)
 
@@ -69,7 +70,7 @@ def get_search_results_data(api_key, query='python'):
     return data
 
 
-def write_data_to_json(data, file_name='search_results.json'):
+def write_data_to_json(data, file_name):
     """Write the results data to a file.
 
     Parameters
@@ -121,19 +122,32 @@ def get_video_metadata(api_key, list_of_videos):
     dict:
         The video metadata from the YouTube Data API.
     """
+    print("Getting all videos metadata...")
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
     }
 
     videos_base_url = 'https://www.googleapis.com/youtube/v3/videos'
     part = 'snippet,statistics,topicDetails,contentDetails'
-    id = ','.join(list_of_videos)
 
-    metadata_url = f'{videos_base_url}?part={part}&id={id}&key={api_key}'
-    resp = requests.get(metadata_url, headers=headers)
-    data = resp.json()
+    batch_size = 50
+    batches = [list_of_videos[i:i + batch_size]
+               for i in range(0, len(list_of_videos), batch_size)]
+
+    data = {}
+    items = []
+
+    for batch in batches:
+        id = ','.join(batch)
+        metadata_url = f'{videos_base_url}?part={part}&id={id}&key={api_key}'
+        resp = requests.get(metadata_url, headers=headers)
+        items.extend(resp.json()["items"])
+        data.update(resp.json())
+
+    data["items"] = items
 
     return data
+
 
 def keep_video_results(data):
     """Keep only the video results from the data.
@@ -148,6 +162,7 @@ def keep_video_results(data):
     list:
         The video results from the data.
     """
+    print("Getting video results...")
     items = data['items']
     video_ids = set()
 
@@ -155,10 +170,13 @@ def keep_video_results(data):
         if item['id']['kind'] == 'youtube#video':
             video_ids.add(item['id']['videoId'])
 
+    video_ids = list(video_ids)
+
     return video_ids
 
+
 def keep_relevant_data(data):
-    """Keep only the relevant data from the data.
+    """Keep only the relevant metadata.
 
     Parameters
     ----------
@@ -170,6 +188,7 @@ def keep_relevant_data(data):
     list:
         The relevant data from the data.
     """
+    print("Getting relevant data...")
     video_data = {}
 
     for index, key in enumerate(data["items"]):
@@ -192,13 +211,22 @@ def keep_relevant_data(data):
 
     return video_data
 
+
 if __name__ == '__main__':
     api_key = set_api_key()
-    youtube_search_data = get_search_results_data(api_key)
+
+    youtube_search_data = get_search_results_data(api_key, 'python', 700)
     write_data_to_json(youtube_search_data, 'search_results.json')
+    # youtube_search_data = read_json_data('search_results.json')
+
     video_ids = keep_video_results(youtube_search_data)
     write_data_to_json(video_ids, 'video_ids.json')
+    # video_ids = read_json_data('video_ids.json')
+
     video_metadata = get_video_metadata(api_key, video_ids)
     write_data_to_json(video_metadata, 'video_metadata.json')
+    # video_metadata = read_json_data('video_metadata.json')
+
     relevant_data = keep_relevant_data(video_metadata)
     write_data_to_json(relevant_data, 'video_relevant_data.json')
+    # relevant_data = read_json_data('video_relevant_data.json')
