@@ -2,6 +2,7 @@
 Understanding the reach of a topic on YouTube by Data Analysis
 
 # Approach
+
 ## Extract Data from YouTube
 - Extract YouTube search results data for topic via YouTube Data API
 - Parse the JSON response to keep only relevant information
@@ -26,6 +27,18 @@ Understanding the reach of a topic on YouTube by Data Analysis
 - category vs number of videos: most videos, least videos
 - category vs duration: most duration, least duration, average duration
 - Dump the information in a csv file for further insights
+
+# Usage
+- Create "creds.json" in root folder with the following structure:
+  ```
+  {
+      "api_key": "AIzaSyCn_jtfgxvi4bAJD1ZpY7soXp2NXgpIp18"
+  }
+  ```
+- Install required libraries using: `pip install -r requirements.txt`
+- Run `extract_metadata_from_yt_videos.py` for fetching the required data in JSON format
+- Once data is extracted, use JupyterNotebook `analysis.ipynb` to perform the analysis by selecting "Restart Kernel and Run All Cells" option from "Kernel" menu.
+
 
 # References
 - [Create YouTube API](https://console.developers.google.com/marketplace/product/google/youtube.googleapis.com?q=search&referrer=search)
