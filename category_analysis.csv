@@ -1,9 +1,9 @@
-category,duration
-general purpose programming,1 days 02:24:26
-machine learning and ai,2 days 10:14:18
-movies,0 days 08:43:25
-python tutorials for beginners,4 days 23:13:41
-python tutorials in hindi,2 days 04:22:11
-python tutorials in russian,0 days 23:51:31
-python tutorials in spanish,6 days 07:49:27
-wildlife,0 days 09:16:00
+category,duration,avg_duration
+python tutorials in hindi,2 days 03:56:35,0 days 02:35:49.750000
+python tutorials for beginners,4 days 23:13:41,0 days 01:37:59.739726027
+general purpose programming,1 days 02:24:26,0 days 01:28:01.444444444
+machine learning and ai,2 days 10:26:33,0 days 01:27:39.825000
+python tutorials (non-en),6 days 07:49:27,0 days 00:46:14.451776649
+python tutorials in russian,0 days 23:22:28,0 days 00:42:29.939393939
+movies,0 days 09:24:00,0 days 00:37:36
+wildlife,0 days 09:17:49,0 days 00:08:59.822580645
