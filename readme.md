@@ -32,7 +32,7 @@ Understanding the reach of a topic on YouTube by Data Analysis
 - Create "creds.json" in root folder with the following structure:
   ```
   {
-      "api_key": "AIzaSyCn_jtfgxvi4bAJD1ZpY7soXp2NXgpIp18"
+      "api_key": "get your api key from: https://console.developers.google.com/marketplace/product/google/youtube.googleapis.com?q=search&referrer=search"
   }
   ```
 - Install required libraries using: `pip install -r requirements.txt`
